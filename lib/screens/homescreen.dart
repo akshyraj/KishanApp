@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:kishanapp/screens/profilescreen.dart';
+import 'package:kishanapp/screens/cropscreen.dart';
+import 'package:kishanapp/screens/schemescreen.dart';
 import 'package:kishanapp/screens/settingscreen.dart';
+
+import 'newsscreen.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -36,32 +39,21 @@ class HomeScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(Icons.dashboard),
-              title: Text("Categories"),
-              onTap: (){},
+              title: Text("Crop List"),
+             onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) {
+		          return CropsPage();
+	          }))},
             ),
             ListTile(
               leading: Icon(Icons.add_to_photos),
-              title: Text("Add Items"),
-              onTap: (){},
+              title: Text("Govt. Schemes"),
+              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) {
+		          return SchemesPage();
+	          }))},
             ),
             ListTile(
               leading: Icon(Icons.info),
               title: Text("About Us"),
-              onTap: (){},
-            ),
-            ListTile(
-              leading: Icon(Icons.share),
-              title: Text("Share with Friends"),
-              onTap: (){},
-            ),
-            ListTile(
-              leading: Icon(Icons.rate_review),
-              title: Text("Rate and Review"),
-              onTap: (){},
-            ),
-            ListTile(
-              leading: Icon(Icons.flag),
-              title: Text("Privacy Policy"),
               onTap: (){},
             ),
           ],
@@ -84,8 +76,8 @@ class BottomNavigator extends StatelessWidget {
           backgroundColor: Colors.white,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person,color:Colors.white,),
-          title: Text('Profile',style: TextStyle(color: Colors.white),),
+          icon: Icon(Icons.new_releases,color:Colors.white,),
+          title: Text('News',style: TextStyle(color: Colors.white),),
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings,color:Colors.white,),
@@ -99,7 +91,7 @@ class BottomNavigator extends StatelessWidget {
         return Text('Home');
         break;
          case 1:
-        return ProfileScreen();
+        return NewsPage();
         break;
          case 2:
         return SettingScreen();
