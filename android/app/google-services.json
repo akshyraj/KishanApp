@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1005481197210",
+    "firebase_url": "https://kishan-app-19493.firebaseio.com",
+    "project_id": "kishan-app-19493",
+    "storage_bucket": "kishan-app-19493.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005481197210:android:7adccb923401b175022923",
+        "android_client_info": {
+          "package_name": "com.example.kishanapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005481197210-n0kd4kaukvqr6mt63md90j6gc5an6t7f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArLfc4FJFx8YSzw_mXiYIxHcujgzxS7qo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005481197210-n0kd4kaukvqr6mt63md90j6gc5an6t7f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

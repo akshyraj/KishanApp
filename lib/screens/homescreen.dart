@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:kishanapp/screens/cropscreen.dart';
 import 'package:kishanapp/screens/schemescreen.dart';
 import 'package:kishanapp/screens/settingscreen.dart';
-
+import 'package:kishanapp/screens/weatherscreen.dart';
+import 'newspage.dart';
 import 'newsscreen.dart';
+
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -54,7 +56,9 @@ class HomeScreen extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.info),
               title: Text("About Us"),
-              onTap: (){},
+              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) {
+		          return WeatherPage();
+	          }))},
             ),
           ],
         ),
