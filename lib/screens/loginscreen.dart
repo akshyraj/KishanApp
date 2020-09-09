@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kishanapp/constants.dart';
 import 'package:kishanapp/screens/signupscreen.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Text(
           'Email',
           style: kLabelStyle,
-        ),
+        ).tr(), 
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
@@ -37,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Icons.email,
                 color: Colors.black,
               ),
-              hintText: 'Enter your Email',
+              hintText: 'Enter your Email'.tr(),
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -53,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Text(
           'Password',
           style: kLabelStyle,
-        ),
+        ).tr(),
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
@@ -72,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Icons.lock,
                 color: Colors.black,
               ),
-              hintText: 'Enter your Password',
+              hintText: 'Enter your Password'.tr(),
               hintStyle: kHintTextStyle,
             ),
           ),
@@ -81,19 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: FlatButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Forgot Password?',
-          style: kLabelStyle,
-        ),
-      ),
-    );
-  }
+
 
   Widget _buildRememberMeCheckbox() {
     return Container(
@@ -116,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Text(
             'Remember me',
             style: kLabelStyle,
-          ),
+          ).tr(),
         ],
       ),
     );
@@ -136,15 +125,15 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         color: Colors.white,
         child: Text(
-          'LOGIN',
+          'Login',
           style: TextStyle(
             color: Color(0xFF527DAA),
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'OpenSans',
-          ),
-        ),
+          )
+        ).tr(),
       ),
     );
   }
@@ -159,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
         text: TextSpan(
           children: [
             TextSpan(
-              text: 'Don\'t have an Account? ',
+              text: "Don't have an Account?".tr(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -167,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             TextSpan(
-              text: 'Sign Up',
+              text: 'Sign Up'.tr(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
@@ -224,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
                         ),
-                      ),
+                      ).tr(),
                       SizedBox(height: 30.0),
                       _buildEmailTF(),
                       SizedBox(
@@ -234,7 +223,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 30.0,
                       ),
-                      _buildForgotPasswordBtn(),
                       _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
                       _buildSignupBtn(),

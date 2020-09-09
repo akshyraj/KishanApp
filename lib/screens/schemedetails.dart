@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kishanapp/model/govtscheme.dart';
 
+
 // ignore: must_be_immutable
 class SchemesDetails extends StatelessWidget {
   Schemes schemes;
   SchemesDetails(this.schemes);
+
+  String get a => null;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class SchemesDetails extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            Text(a),
             SizedBox(
               height: 20,
             ),

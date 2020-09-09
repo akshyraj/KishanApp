@@ -1,0 +1,22 @@
+{
+    "Email" : "ईमेल",
+    "Password" : "पासवर्ड",
+    "Enter your Email" : "अपना ईमेल दर्ज करें",
+    "Enter your Password" : "अपना पासवर्ड डालें",
+    "Forgot Password " : "पासवर्ड भूल गए",
+    "Remember me" : "मुझे याद रखना",
+    "Login" : "लॉग इन",
+    "Sign Up" : "साइन अप ",
+    "Don't have an Account ?" : "खाता नहीं है?",
+    "Sign In" : "साइन इन",
+    "Kishan App" : "किशन ऐप",
+    "Home" : "होम",
+    "Crop List" : "फसल सूची",
+    "Govt Schemes" : "सरकार की योजनाएं",
+    "Weather" : "मौसम",
+    "About Us" : "हमारे बारे में",
+    "News" : "समाचार",
+    "Setting" : "सेटिंग",
+    "Crops" : "फसल",
+    "Goverment Schemes" : "सरकार की योजनाएं"
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 
 class WeatherPage extends StatelessWidget{
 
@@ -45,7 +46,7 @@ class WeatherPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Weather'),
+        title: Text('Weather').tr(),
         backgroundColor: Colors.green,
       ),
       body: Container(

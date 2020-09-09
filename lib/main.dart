@@ -4,10 +4,37 @@ import 'package:kishanapp/screens/homescreen.dart';
 import 'package:kishanapp/screens/loginscreen.dart';
 import 'package:kishanapp/screens/splashscreen.dart';
 import 'package:kishanapp/screens/signupscreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+void main() async {
+ 
+  WidgetsFlutterBinding.ensureInitialized();
+   await Firebase.initializeApp();
+   runApp(EasyLocalization(
+      supportedLocales: [ 
+        Locale('en', 'US'), 
+        Locale('gu', 'IN'), 
+        Locale('hi', 'IN'),
+        Locale('mr', 'IN'),
+        Locale('pa', 'IN'),
+        ],
+      path: 'assets/translations', // <-- change patch to your
+      fallbackLocale: Locale('en', 'US'),
+      child: MyApp()
+    ),
+   );
+}
+// ignore: must_be_immutable
+class MyApp extends StatelessWidget {
+   String a = "AJ";
+  @override
+  Widget build(BuildContext context) {
 
-void main() => runApp(MaterialApp(
-      title: 'GridView Demo',
+    return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       home: SplashScreen(),
       theme: ThemeData(
         primarySwatch: Colors.red,
@@ -20,5 +47,6 @@ void main() => runApp(MaterialApp(
         SIGNUP_SCREEN: (BuildContext context) => SignupScreen(),
         //GRID_ITEM_DETAILS_SCREEN: (BuildContext context) => GridItemDetails(),
       },
-    ));
-
+    );
+  }
+}
