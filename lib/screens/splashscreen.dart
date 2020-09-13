@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kishanapp/constants.dart';
+import 'package:kishanapp/screens/homescreen.dart';
 
+
+import 'loginscreen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,6 +16,8 @@ class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   var _visible = true;
 
+  
+
   AnimationController animationController;
   Animation<double> animation;
 
@@ -22,7 +27,17 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed(LOGIN_SCREEN);
+    FirebaseAuth auth = FirebaseAuth.instance;
+    if (auth.currentUser != null) {
+     Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return HomeScreen();
+      }));
+    }
+    else{
+     Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
+    }
   }
 
 @override
@@ -52,6 +67,7 @@ dispose() {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,

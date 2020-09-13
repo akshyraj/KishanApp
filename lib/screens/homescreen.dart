@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kishanapp/screens/cropscreen.dart';
 import 'package:kishanapp/screens/schemescreen.dart';
 import 'package:kishanapp/screens/settingscreen.dart';
 import 'package:kishanapp/screens/weatherscreen.dart';
+import 'loginscreen.dart';
 import 'newsscreen.dart';
 import 'datascreen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -11,8 +13,6 @@ import 'package:easy_localization/easy_localization.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
-  
-
   String code = 'en';
   String _selectedGender;
   List<DropdownMenuItem<String>> _dropDownItem() {
@@ -115,6 +115,18 @@ class HomeScreen extends StatelessWidget {
 		          return DataPage();
 	          }))},
             ),
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text("Log Out").tr(),
+              onTap: () async => {
+                FirebaseAuth.instance.signOut(),
+                 if(FirebaseAuth.instance.currentUser == null) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return LoginScreen();
+                  }))
+                }
+	          },
+            ),
           ],
         ),
       ),
@@ -146,7 +158,7 @@ class BottomNavigator extends StatelessWidget {
   tabBuilder: (BuildContext context, int index) {
     switch (index) {
       case 0:
-          return Text('Home');
+          return Text(FirebaseAuth.instance.currentUser.uid);
         break;
          case 1:
         return NewsPage();

@@ -6,7 +6,9 @@ import 'package:kishanapp/screens/splashscreen.dart';
 import 'package:kishanapp/screens/signupscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:easy_localization/easy_localization.dart';
-
+import 'package:kishanapp/services/auth.dart';
+import 'package:provider/provider.dart';
+import 'package:kishanapp/model/users.dart';
 void main() async {
  
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
+    return StreamProvider<Users>.value(
+      value: Authservice().user,
+      child: MaterialApp(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
@@ -46,6 +50,7 @@ class MyApp extends StatelessWidget {
         SIGNUP_SCREEN: (BuildContext context) => SignupScreen(),
         //GRID_ITEM_DETAILS_SCREEN: (BuildContext context) => GridItemDetails(),
       },
+      )
     );
   }
 }

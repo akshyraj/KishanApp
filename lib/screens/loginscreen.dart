@@ -4,6 +4,10 @@ import 'package:kishanapp/constants.dart';
 import 'package:kishanapp/screens/signupscreen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:kishanapp/services/auth.dart';
+import 'package:kishanapp/model/users.dart';
+
+import 'homescreen.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -16,10 +20,11 @@ class _LoginScreenState extends State<LoginScreen> {
   String password='';
   String error='';
   final Authservice _auth = Authservice();
-
+  Users user;
+  
   @override
   Widget build(BuildContext context) {
-
+    
     final _formkey = GlobalKey<FormState>();
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -57,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                     
                       Text(
                         'Sign In',
                         style: TextStyle(
@@ -179,9 +185,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               });
                             }
                             else{
-                              setState(() {
-                                error = 'Login';
-                              });
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return HomeScreen();
+                    }));
                             }
                           }
                         },
@@ -202,7 +208,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ).tr(),
                       ),
                     ),
-                  Text(error),
                   GestureDetector(
                       onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) {
                       return SignupScreen();

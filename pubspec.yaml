@@ -32,6 +32,7 @@ dependencies:
   easy_localization: ^2.3.3
   translator: ^0.1.5
   firebase_auth: ^0.18.0+1
+  provider: ^4.3.2+2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

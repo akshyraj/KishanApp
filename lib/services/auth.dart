@@ -11,13 +11,24 @@ class Authservice {
 
   Stream<Users> get user{
     // ignore: deprecated_member_use
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+    return _auth.onAuthStateChanged.map((User user) => _userFromFirebaseUser(user));
   }
+  
   Future singInWithEmailandPassword(String email, String password) async{
     try{
        User user = (await _auth.signInWithEmailAndPassword(email: email, password: password)).user;
        return _userFromFirebaseUser(user);
     }catch(e){
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future signOut() async{
+    try{
+      return await _auth.signOut();
+    }
+    catch(e){
       print(e.toString());
       return null;
     }
