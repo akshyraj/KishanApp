@@ -9,7 +9,7 @@ class DataPage extends StatelessWidget {
     
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('AJ').snapshots(),
+        stream: FirebaseFirestore.instance.collection('Users').snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
         if (snapshot.hasError) {
           return Text('Something went wrong');
@@ -20,7 +20,7 @@ class DataPage extends StatelessWidget {
         return new ListView(
           children: snapshot.data.docs.map((DocumentSnapshot document) {
             return new ListTile(
-              title: new Text(document.data()['firstname'][context.locale.toString()]),
+              title: new Text(document.data()['name']),
             );
           }).toList(),
         );
