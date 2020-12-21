@@ -7,8 +7,6 @@ class SchemesDetails extends StatelessWidget {
   Schemes schemes;
   SchemesDetails(this.schemes);
 
-  String get a => null;
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -26,7 +24,6 @@ class SchemesDetails extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Text(a),
             SizedBox(
               height: 20,
             ),

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kishanapp/model/users.dart';
 
@@ -16,6 +15,7 @@ class Authservice {
     // ignore: deprecated_member_use
     return _auth.onAuthStateChanged.map((User user) => _userFromFirebaseUser(user));
   }
+
   
   Future singInWithEmailandPassword(String email, String password) async{
     try{
@@ -30,7 +30,7 @@ class Authservice {
   Future singUpWithEmailandPassword(String email, String password, String name, String place, String district, String state, String zipcode) async{
     try{
        User user = (await _auth.createUserWithEmailAndPassword(email: email, password: password)).user;
-       db.collection('Users').add(
+       db.collection('Users').doc(user.uid).set(
          {
            'name' : name,
            'uid' : user.uid,
@@ -50,6 +50,11 @@ class Authservice {
       return 'The account already exists for that email.';
   }
     }
+  }
+
+  Future<String> getUserId() async{
+    var uid = _auth.currentUser.uid;
+    return uid;
   }
 
   Future signOut() async{

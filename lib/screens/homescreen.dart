@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kishanapp/screens/cropscreen.dart';
+import 'package:kishanapp/screens/productcategory.dart';
 import 'package:kishanapp/screens/schemescreen.dart';
 import 'package:kishanapp/screens/settingscreen.dart';
 import 'package:kishanapp/screens/weatherscreen.dart';
+import 'package:kishanapp/screens/uploadImage.dart';
 import 'loginscreen.dart';
 import 'newsscreen.dart';
 import 'datascreen.dart';
@@ -112,12 +114,12 @@ class HomeScreen extends StatelessWidget {
               leading: Icon(Icons.info),
               title: Text("About Us").tr(),
               onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) {
-		          return DataPage();
+		          return UploadingImageToFirebaseStorage();
 	          }))},
             ),
             ListTile(
               leading: Icon(Icons.info),
-              title: Text("Log Out").tr(),
+              title: Text("Log Out"),
               onTap: () async => {
                 FirebaseAuth.instance.signOut(),
                  if(FirebaseAuth.instance.currentUser == null) {
@@ -158,12 +160,12 @@ class BottomNavigator extends StatelessWidget {
   tabBuilder: (BuildContext context, int index) {
     switch (index) {
       case 0:
-          return Text(FirebaseAuth.instance.currentUser.uid);
+        return ProductCategory();
         break;
-         case 1:
+      case 1:
         return NewsPage();
         break;
-         case 2:
+      case 2:
         return SettingScreen();
         break;
       default:
