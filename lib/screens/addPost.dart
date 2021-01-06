@@ -8,57 +8,36 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kishanapp/screens/homescreen.dart';
 import 'package:kishanapp/services/auth.dart';
 import 'package:path/path.dart';
-import 'package:video_compress/video_compress.dart';
-import 'package:video_player/video_player.dart';
+import 'package:uuid/uuid.dart';
 import '../constants.dart';
 
-final Color yellow = Color(0xfffbc31b);
-final Color orange = Color(0xfffb6900);
-
-class UploadingImageToFirebaseStorage extends StatefulWidget {
+class AddPost extends StatefulWidget {
   @override
-  _UploadingImageToFirebaseStorageState createState() =>
-      _UploadingImageToFirebaseStorageState();
+  _AddPostState createState() => _AddPostState();
 }
 
-class _UploadingImageToFirebaseStorageState
-    extends State<UploadingImageToFirebaseStorage> {
-  
-  
-  File _video;
+class _AddPostState extends State<AddPost> {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  CollectionReference _postReference = FirebaseFirestore.instance.collection('Posts');
+  String username = '';
   File _imageFile;
-  String name = '';
   PickedFile pickeFile;
   final picker = ImagePicker();
-  Map<String, dynamic> userdetails;
-  VideoPlayerController _controller;
-  CollectionReference _userReference = FirebaseFirestore.instance.collection('Users');
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String query='';
+  String postId = Uuid().v4();
+  String mediaUrl='';
+  
   Authservice _authservice = new Authservice();
-  String username="";
-
-  userData() async{
-    Map userdetails = await _authservice.getUserDetails();
-    setState(() {
-      username = userdetails['name'].toString();
-    });
-    print(userdetails.length);
-  }
-
-  Future<DocumentSnapshot> getSnapshot() async{
-    return await _userReference.doc(FirebaseAuth.instance.currentUser.uid).get();
-  }
- 
-  // ignore: non_constant_identifier_names
-  void initState(){
-    super.initState();
+  _AddPostState() {
     userData();
   }
-  _pickVideo() async {
-    pickeFile = await picker.getVideo(source: ImageSource.gallery);
-    _video = File(pickeFile.path);
-    _controller = VideoPlayerController.file(_video)
-      ..initialize().then((_) => {setState(() {}), _controller.pause()});
+
+  userData() async {
+    Map<String, dynamic> userdetails = await _authservice.getUserDetails();
+    setState(() {
+      username = userdetails['name'];
+    });
   }
 
   _pickImage() async {
@@ -69,42 +48,46 @@ class _UploadingImageToFirebaseStorageState
     });
   }
 
-  Future uploadVideoToFirebase(BuildContext context) async {
-    print(File(pickeFile.path).length());
-    final info = await VideoCompress.compressVideo(pickeFile.path,
-        quality: VideoQuality.LowQuality,
-        deleteOrigin: false,
-        includeAudio: true);
-
-    File videofile = File(info.path);
-    String fileName = basename(videofile.path);
-    print(fileName);
-    Reference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(
-        videofile, SettableMetadata(contentType: 'video/mp4'));
-    TaskSnapshot taskSnapshot = await uploadTask;
-    taskSnapshot.ref.getDownloadURL().then((value) =>
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
+  handleSubmit(BuildContext context) async
+  {
+    String mediaUrl = await uploadImage();
+    await createPostInFireStore(mediaUrl: mediaUrl,query: query);
+    
+     Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomeScreen();
-        })));
+        }));
   }
 
-  Future uploadImageToFirebase(BuildContext context) async {
+  createPostInFireStore({String mediaUrl,String query})
+  {
+
+    print(postId);
+    print(_auth.currentUser.uid);
+    print(username);
+    print(mediaUrl);
+    print(query);
+
+   _postReference.doc(postId)
+   .set({
+     'postId':postId,
+     'ownerId':_auth.currentUser.uid,
+     'username':username,
+     'mediaUrl':mediaUrl,
+     'query':query,
+   });
+  }
+
+  Future<String> uploadImage() async {
     String fileName = basename(_imageFile.path);
     Reference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
+        FirebaseStorage.instance.ref().child('Images').child(fileName);
     UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
     TaskSnapshot taskSnapshot = await uploadTask;
-    taskSnapshot.ref.getDownloadURL().then((value) =>
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return HomeScreen();
-        })));
+    return taskSnapshot.ref.getDownloadURL();
   }
 
   @override
   Widget build(BuildContext context) {
-    var item = userdetails;
     return Scaffold(
       appBar: AppBar(
         title: Text('Q & A'),
@@ -125,42 +108,42 @@ class _UploadingImageToFirebaseStorageState
                   horizontal: 10.0,
                   vertical: 15.0,
                 ),
-                child: 
-                Column(
+                child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        child:Text(username)
-                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            'Name',
-                            style: kLabelStyle,
+                          ListTile(
+                            leading: CircleAvatar(
+                              child:Text("AJ"),
+                              backgroundColor: Colors.teal,
+                            ),
+                            title: Text(
+                              username,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
                           SizedBox(height: 10.0),
                           Container(
                             alignment: Alignment.centerLeft,
                             decoration: kBoxDecorationStyle,
-                            height: 60.0,
+                            height: 100.0,
                             child: TextFormField(
                               obscureText: false,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'OpenSans',
                               ),
+                              maxLines: 4,
                               validator: (value) =>
                                   value.isEmpty ? 'Enter the Name' : null,
-                              onChanged: (value) => name = value,
+                              onChanged: (value) => query = value,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                contentPadding: EdgeInsets.only(top: 14.0),
-                                prefixIcon: Icon(
-                                  Icons.lock,
-                                  color: Colors.black,
-                                ),
-                                hintText: 'Enter your Name',
+                                contentPadding:
+                                    EdgeInsets.only( left: 5.0),
+                                hintText: 'Enter your Question',
                                 hintStyle: kHintTextStyle,
                               ),
                             ),
@@ -188,7 +171,7 @@ class _UploadingImageToFirebaseStorageState
                         width: double.infinity,
                         child: RaisedButton(
                           elevation: 5.0,
-                          onPressed: () => {uploadImageToFirebase(context)},
+                          onPressed: () => {handleSubmit(context)},
                           padding: EdgeInsets.all(15.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
@@ -211,4 +194,3 @@ class _UploadingImageToFirebaseStorageState
     );
   }
 }
-

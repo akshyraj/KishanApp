@@ -1,17 +1,20 @@
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kishanapp/services/auth.dart';
 
-class ProductService{
+class ProductService {
+  // ignore: unused_field
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  CollectionReference _productReference = FirebaseFirestore.instance.collection('Products');
-  Authservice _userService  = new Authservice();
+  CollectionReference _productReference =
+      FirebaseFirestore.instance.collection('Products');
+  CollectionReference _post = FirebaseFirestore.instance.collection('Posts').doc().collection('usersPosts');
+  // ignore: unused_field
+  Authservice _userService = new Authservice();
 
-  Future <List> featuredItems() async{
-    List<Map<String,String>> itemList = new List();
+  Future<List> featuredItems() async {
+    List<Map<String, String>> itemList = new List();
     QuerySnapshot itemsRef = await _productReference.get();
-    for(DocumentSnapshot docRef in itemsRef.docs){
-      Map<String,String> items = new Map();
+    for (DocumentSnapshot docRef in itemsRef.docs) {
+      Map<String, String> items = new Map();
       items['product_id'] = docRef.data()['product_id'].toString();
       items['image'] = docRef.data()['image'];
       items['product_name'] = docRef.data()['product_name'];
@@ -25,7 +28,7 @@ class ProductService{
     return itemList;
   }
 
-  Future<Map> particularItem(String productId) async{
+  Future<Map<String, String>> particularItem(String productId) async {
     DocumentSnapshot prodRef = await _productReference.doc(productId).get();
     Map<String, dynamic> itemDetail = new Map();
     itemDetail['product_id'] = prodRef.data()['product_id'].toString();

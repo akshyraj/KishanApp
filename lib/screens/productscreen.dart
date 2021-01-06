@@ -5,59 +5,56 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kishanapp/services/productService.dart';
 
-
 class GridItemList extends StatefulWidget {
   @override
   _GridItemListState createState() => _GridItemListState();
 }
 
 class _GridItemListState extends State<GridItemList> {
-
   ProductService _productService = new ProductService();
-  _GridItemListState(){
+  
+  _GridItemListState() {
     listFeaturedItems();
   }
 
-  List featuredItems  = new List(0);
-  void listFeaturedItems() async{
-    List<Map<String,String>> featuredItemList = await _productService.featuredItems();
+  List featuredItems = new List(0);
+
+  void listFeaturedItems() async {
+    List<Map<String, String>> featuredItemList =
+        await _productService.featuredItems();
+    print("Hi");
     setState(() {
       featuredItems = featuredItemList;
     });
   }
 
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     double itemWidth = size.width / 2;
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 30,
-          ),
-          SliverGrid(
-          gridDelegate: 
-            SliverGridDelegateWithFixedCrossAxisCount(
+      body: CustomScrollView(slivers: [
+        SliverAppBar(
+          expandedHeight: 30,
+        ),
+        SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: (itemWidth / itemHeight),
               crossAxisCount: 2,
               mainAxisSpacing: 20.0,
               crossAxisSpacing: 20.0,
             ),
-          delegate: SliverChildBuilderDelegate((BuildContext context, int index){
-            var item = featuredItems[index];
-          return featuredItemCard(item,index);
-        },
-            childCount: featuredItems.length
-        )
-        )
-        ]
-      ),
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
+              var item = featuredItems[index];
+              return featuredItemCard(item, index);
+            }, childCount: featuredItems.length))
+      ]),
     );
   }
-  Widget featuredItemCard(item,index){
+
+  Widget featuredItemCard(item, index) {
     return Card(
       elevation: 0,
       semanticContainer: true,
@@ -87,19 +84,13 @@ class _GridItemListState extends State<GridItemList> {
               children: <Widget>[
                 Text(
                   "\Rs.${item['price']}.00",
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold
-                  ),
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   item['product_name'],
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.grey
-                  ),
+                  style: TextStyle(fontSize: 15.0, color: Colors.grey),
                 ),
               ],
             ),

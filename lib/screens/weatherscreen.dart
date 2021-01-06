@@ -3,44 +3,41 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 
-class WeatherPage extends StatelessWidget{
-
-  final String apiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=surat&appid=f6950dfa767d426784a7faa9ca415fa1";
+class WeatherPage extends StatelessWidget {
+  final String apiUrl =
+      "http://api.openweathermap.org/data/2.5/forecast?q=360003,in&appid=f6950dfa767d426784a7faa9ca415fa1";
   Future<List<dynamic>> fetchWeather() async {
-
     var result = await http.get(apiUrl);
     return json.decode(result.body)['list'];
-
   }
 
-  double _temp(dynamic weather){
-    return weather['main']['temp']/10;
+  double _temp(dynamic weather) {
+    return weather['main']['temp'] / 10;
   }
 
-  double _maxtemp(dynamic weather){
-    return weather['main']['temp_max']/10;
+  double _maxtemp(dynamic weather) {
+    return weather['main']['temp_max'] / 10;
   }
 
-  double _mintemp(dynamic weather){
-    return weather['main']['temp_min']/10;
+  double _mintemp(dynamic weather) {
+    return weather['main']['temp_min'] / 10;
   }
 
-  int _humidity(dynamic weather){
+  int _humidity(dynamic weather) {
     return weather['main']['humidity'];
   }
 
-  String _date(dynamic weather){
+  String _date(dynamic weather) {
     return weather['dt_txt'];
   }
 
-  String _description(dynamic weather){
+  String _description(dynamic weather) {
     return weather['weather'][0]['description'];
   }
 
-  String _weather(dynamic weather){
+  String _weather(dynamic weather) {
     return 'http://openweathermap.org/img/w/${weather['weather'][0]['icon']}.png';
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,29 +50,43 @@ class WeatherPage extends StatelessWidget{
         child: FutureBuilder<List<dynamic>>(
           future: fetchWeather(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if(snapshot.hasData){
+            if (snapshot.hasData) {
               return ListView.builder(
                   itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index){
-                    return
-                      Card(
-                        child: Column(
-                          children: <Widget>[
-                            ListTile(
-                              leading:  Image.network(_weather(snapshot.data[index]),),
-                              title:  Text((_description(snapshot.data[index]).toString().toUpperCase())),
-                              subtitle: Text("Temprature           :  " + (_temp(snapshot.data[index]).toStringAsFixed(2)) + "\n" 
-                                        + "Max Temprature  :  " + (_maxtemp(snapshot.data[index]).toStringAsFixed(2)) + "\n" 
-                                        + "Min Temprature   :  " + (_mintemp(snapshot.data[index]).toStringAsFixed(2)) + "\n" 
-                                        + "Humidity               :  " + (_humidity(snapshot.data[index]).toString()) + "\n" 
-                                        
-                                        + "Date and Time     :  " + (_date(snapshot.data[index]))),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            leading: Image.network(
+                              _weather(snapshot.data[index]),
                             ),
-                          ],
-                        ),
-                      );
+                            title: Text((_description(snapshot.data[index])
+                                .toString()
+                                .toUpperCase())),
+                            subtitle: Text("Temprature           :  " +
+                                (_temp(snapshot.data[index])
+                                    .toStringAsFixed(2)) +
+                                "\n" +
+                                "Max Temprature  :  " +
+                                (_maxtemp(snapshot.data[index])
+                                    .toStringAsFixed(2)) +
+                                "\n" +
+                                "Min Temprature   :  " +
+                                (_mintemp(snapshot.data[index])
+                                    .toStringAsFixed(2)) +
+                                "\n" +
+                                "Humidity               :  " +
+                                (_humidity(snapshot.data[index]).toString()) +
+                                "\n" +
+                                "Date and Time     :  " +
+                                (_date(snapshot.data[index]))),
+                          ),
+                        ],
+                      ),
+                    );
                   });
-            }else {
+            } else {
               return Center(child: CircularProgressIndicator());
             }
           },

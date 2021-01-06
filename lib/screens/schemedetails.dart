@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kishanapp/model/govtscheme.dart';
 
-
 // ignore: must_be_immutable
 class SchemesDetails extends StatelessWidget {
   Schemes schemes;
@@ -12,29 +11,29 @@ class SchemesDetails extends StatelessWidget {
     return WillPopScope(
       // ignore: missing_return
       onWillPop: () {
-		    Navigator.pop(context);
-	    },
+        Navigator.pop(context);
+      },
       child: Scaffold(
-        backgroundColor: Color(0xfff4f4f4),
-      appBar: AppBar(
-        title: Text('Schemes'),
-        backgroundColor: Colors.green,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
+          backgroundColor: Color(0xfff4f4f4),
+          appBar: AppBar(
+            title: Text('Schemes'),
+            backgroundColor: Colors.green,
+            elevation: 0,
+          ),
+          body: SingleChildScrollView(
+              child: Column(children: <Widget>[
             SizedBox(
               height: 20,
             ),
             Container(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child : Text(schemes.schemes_name,
+              child: Text(
+                schemes.schemes_name,
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
-                textAlign: TextAlign.left, 
+                textAlign: TextAlign.left,
               ),
             ),
             SizedBox(
@@ -43,29 +42,30 @@ class SchemesDetails extends StatelessWidget {
             Center(
               child: Card(
                 elevation: 5,
-                  child: Container(
-                    height: 200,
-                    width: 350,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(schemes.imageUrl)
-                          ,
-                        ),
-                      ),
+                child: Container(
+                  height: 200,
+                  width: 350,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(schemes.imageUrl),
                     ),
+                  ),
                 ),
               ),
-               SizedBox(
+            ),
+            SizedBox(
               height: 10,
             ),
             Container(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child : Text('About',style: TextStyle(
+              child: Text(
+                'About',
+                style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -73,14 +73,18 @@ class SchemesDetails extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child : Text(schemes.content,),
+              child: Text(
+                schemes.content,
+              ),
             ),
             Container(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child : Text('Who can Apply',style: TextStyle(
+              child: Text(
+                'Who can Apply',
+                style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -88,14 +92,18 @@ class SchemesDetails extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child : Text(schemes.whocanapply,),
-            ), 
+              child: Text(
+                schemes.whocanapply,
+              ),
+            ),
             Container(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child : Text('How to Apply',style: TextStyle(
+              child: Text(
+                'How to Apply',
+                style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -103,18 +111,17 @@ class SchemesDetails extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child : Text(schemes.howtoapply,),
-            ), 
+              child: Text(
+                schemes.howtoapply,
+              ),
+            ),
             Container(
-              child : Text('For Apply and More Details Click Link'),
+              child: Text('For Apply and More Details Click Link'),
             ),
             SizedBox(
               height: 20,
             ),
-          ]
-        )
-      )
-      ),
+          ]))),
     );
   }
 }

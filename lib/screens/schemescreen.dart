@@ -9,7 +9,7 @@ class SchemesPage extends StatefulWidget {
     return _SchemesPageState();
   }
 }
- 
+
 class _SchemesPageState extends State<SchemesPage> {
   final List<Schemes> schemes = SchemesList.getSchemes();
   Widget _buildNewsList() {
@@ -20,6 +20,7 @@ class _SchemesPageState extends State<SchemesPage> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
