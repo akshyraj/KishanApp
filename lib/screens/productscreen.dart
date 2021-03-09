@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:kishanapp/screens/particularItem.dart';
 import 'package:kishanapp/services/productService.dart';
 
 class GridItemList extends StatefulWidget {
@@ -12,7 +13,7 @@ class GridItemList extends StatefulWidget {
 
 class _GridItemListState extends State<GridItemList> {
   ProductService _productService = new ProductService();
-  
+
   _GridItemListState() {
     listFeaturedItems();
   }
@@ -22,10 +23,19 @@ class _GridItemListState extends State<GridItemList> {
   void listFeaturedItems() async {
     List<Map<String, String>> featuredItemList =
         await _productService.featuredItems();
-    print("Hi");
     setState(() {
       featuredItems = featuredItemList;
     });
+  }
+
+  openParticularItem(item) async {
+    String productId = item['product_id'].toString();
+    Map itemDetails = await _productService.particularItem(productId);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return ParticularItem(
+        itemDetails: itemDetails,
+      );
+    }));
   }
 
   Widget build(BuildContext context) {
@@ -34,10 +44,12 @@ class _GridItemListState extends State<GridItemList> {
     double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     double itemWidth = size.width / 2;
     return Scaffold(
+      appBar: AppBar(
+            title: Text('Product'),
+            backgroundColor: Colors.green,
+            elevation: 0,
+          ),
       body: CustomScrollView(slivers: [
-        SliverAppBar(
-          expandedHeight: 30,
-        ),
         SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: (itemWidth / itemHeight),
@@ -68,6 +80,9 @@ class _GridItemListState extends State<GridItemList> {
           Expanded(
             child: Material(
               child: InkWell(
+                onTap: () {
+                  openParticularItem(item);
+                },
                 child: GridTile(
                   child: Image.network(
                     item['image'],

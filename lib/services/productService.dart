@@ -28,7 +28,7 @@ class ProductService {
     return itemList;
   }
 
-  Future<Map<String, String>> particularItem(String productId) async {
+  Future<Map> particularItem(String productId) async {
     DocumentSnapshot prodRef = await _productReference.doc(productId).get();
     Map<String, dynamic> itemDetail = new Map();
     itemDetail['product_id'] = prodRef.data()['product_id'].toString();
