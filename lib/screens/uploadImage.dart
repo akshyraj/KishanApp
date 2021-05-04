@@ -33,7 +33,6 @@ class _UploadingImageToFirebaseStorageState
   Map<String, dynamic> userdetails;
   VideoPlayerController _controller;
   CollectionReference _userReference = FirebaseFirestore.instance.collection('Users');
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   Authservice _authservice = new Authservice();
   String username="";
 
@@ -54,6 +53,7 @@ class _UploadingImageToFirebaseStorageState
     super.initState();
     userData();
   }
+  // ignore: unused_element
   _pickVideo() async {
     pickeFile = await picker.getVideo(source: ImageSource.gallery);
     _video = File(pickeFile.path);
@@ -104,7 +104,7 @@ class _UploadingImageToFirebaseStorageState
 
   @override
   Widget build(BuildContext context) {
-    var item = userdetails;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Q & A'),

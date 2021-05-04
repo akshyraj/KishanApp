@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<Users>.value(
       value: Authservice().user,
       child: MaterialApp(
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,

@@ -1,6 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-// ignore: unused_import
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kishanapp/screens/particularItem.dart';

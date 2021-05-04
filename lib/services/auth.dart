@@ -59,8 +59,15 @@ class Authservice {
     }
   }
 
-  Future<String> getUserId() async {
+  String getUserId() {
     var uid = _auth.currentUser.uid;
+    return uid;
+  }
+  
+
+
+  String getEmail() {
+    var uid = _auth.currentUser.email;
     return uid;
   }
 
@@ -79,6 +86,8 @@ class Authservice {
       details['uid'] = docRef.data()['uid'].toString();
       details['name'] = docRef.data()['name'];
       details['email'] = docRef.data()['email'];  
+      details['zipcode'] = docRef.data()['zipcode'];
     return details;
   }
+  
 }

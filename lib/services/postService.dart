@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:kishanapp/services/auth.dart';
+
 
 class PostService {
   // ignore: unused_field
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   CollectionReference _post = FirebaseFirestore.instance.collection('Posts');
-  Authservice _userService = new Authservice();
 
   Future<List> getPost() async {
     List<Map<String, String>> postList = new List();

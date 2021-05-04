@@ -6,17 +6,23 @@ import 'package:kishanapp/screens/addPost.dart';
 import 'package:kishanapp/screens/productcategory.dart';
 import 'package:kishanapp/screens/schemescreen.dart';
 import 'package:kishanapp/screens/postscreen.dart';
+import 'package:kishanapp/screens/shoppingBag.dart';
 import 'package:kishanapp/screens/weatherscreen.dart';
-import 'package:kishanapp/screens/uploadImage.dart';
+import 'package:kishanapp/services/auth.dart';
 import 'loginscreen.dart';
 import 'newsscreen.dart';
-import 'productscreen.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   String code = 'en';
   String _selectedGender;
+  String userEmail;
+  Authservice authservice = new Authservice();
+  HomeScreen(){
+    
+   userEmail = authservice.getEmail();
+  }
   List<DropdownMenuItem<String>> _dropDownItem() {
     List<String> ddl = ["English", "हिन्दी", "मराठी", "ગુજરાતી", "ਪੰਜਾਬੀ"];
     return ddl
@@ -27,6 +33,11 @@ class HomeScreen extends StatelessWidget {
         .toList();
   }
 
+  
+  
+ 
+
+ 
   // ignore: unused_field
   int _currentIndex = 0;
   @override
@@ -78,10 +89,10 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.all(0),
           children: [
             UserAccountsDrawerHeader(
-              accountEmail: Text("akshayrajsinh324@gmail.com"),
-              accountName: Text("Akshayrajsinh Jadeja"),
+              accountEmail: Text(userEmail),
+              accountName: Text("Welcome, "),
               currentAccountPicture: CircleAvatar(
-                child: Text("AJ"),
+                child: Text(userEmail.substring(0,1).toUpperCase()),
               ),
               decoration: BoxDecoration(
                 color: Colors.green,
@@ -120,14 +131,24 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.info),
-              title: Text("About Us").tr(),
+              leading: Icon(Icons.shopping_cart),
+              title: Text("Cart").tr(),
+              onTap: () => {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ShoppingBag();
+                }))
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.add_box),
+              title: Text("Ask Question").tr(),
               onTap: () => {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return AddPost();
                 }))
               },
             ),
+            
             ListTile(
               leading: Icon(Icons.info),
               title: Text("Log Out"),
@@ -161,6 +182,7 @@ class BottomNavigator extends StatelessWidget {
               Icons.home,
               color: Colors.white,
             ),
+            // ignore: deprecated_member_use
             title: Text(
               'Home',
               style: TextStyle(color: Colors.white),
@@ -169,9 +191,10 @@ class BottomNavigator extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.new_releases,
+              Icons.article,
               color: Colors.white,
             ),
+            // ignore: deprecated_member_use
             title: Text(
               'News',
               style: TextStyle(color: Colors.white),
@@ -179,11 +202,12 @@ class BottomNavigator extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.settings,
+              Icons.pages_outlined,
               color: Colors.white,
             ),
+            // ignore: deprecated_member_use
             title: Text(
-              'Setting',
+              'Post',
               style: TextStyle(color: Colors.white),
             ).tr(),
           ),

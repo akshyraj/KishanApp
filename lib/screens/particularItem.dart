@@ -1,15 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-// ignore: unused_import
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:kishanapp/services/productService.dart';
 import 'package:kishanapp/services/shoppingBagService.dart';
-import 'package:webfeed/domain/media/rights.dart';
 
 class ParticularItem extends StatefulWidget {
   final Map<String, dynamic> itemDetails;
-  ParticularItem({var key, this.itemDetails}) : super(key: key);
+  ParticularItem({var key, this.itemDetails, bool editProduct}) : super(key: key);
   @override
   _ParticularItemState createState() => _ParticularItemState();
 }
@@ -36,8 +31,17 @@ class _ParticularItemState extends State<ParticularItem> {
 
   addToShoppingBag() async {
     ShoppingBagService _shoppingBagService = new ShoppingBagService();
+    print(widget.itemDetails['product_id']);
+    // ignore: unused_local_variable
     String msg = await _shoppingBagService.add(
-        widget.itemDetails['product_Id'], productQuantity);
+        widget.itemDetails['product_id'], widget.itemDetails['price'], productQuantity);
+  }
+
+  // ignore: non_constant_identifier_names
+  ToShoppingBag() async {
+    ShoppingBagService _shoppingBagService = new ShoppingBagService();
+    print(widget.itemDetails['product_id']);
+   await _shoppingBagService.list();
   }
 
   @override
@@ -80,6 +84,17 @@ class _ParticularItemState extends State<ParticularItem> {
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               alignment: Alignment.centerLeft,
               child: Text(
+                "Rs " + widget.itemDetails['product_id'],
+                style: TextStyle(
+                  fontFamily: 'NovaSquare',
+                  fontSize: 25,
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              alignment: Alignment.centerLeft,
+              child: Text(
                 "Rs " + widget.itemDetails['price'],
                 style: TextStyle(
                   fontFamily: 'NovaSquare',
@@ -87,7 +102,7 @@ class _ParticularItemState extends State<ParticularItem> {
                 ),
               ),
             ),
-            SizedBox(height : 10),
+            SizedBox(height: 10),
             Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               alignment: Alignment.centerLeft,
@@ -111,7 +126,7 @@ class _ParticularItemState extends State<ParticularItem> {
                 ),
               ),
             ),
-            SizedBox(height : 10),
+            SizedBox(height: 10),
             Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               alignment: Alignment.centerLeft,
@@ -135,7 +150,7 @@ class _ParticularItemState extends State<ParticularItem> {
                 ),
               ),
             ),
-            SizedBox(height : 10),
+            SizedBox(height: 10),
             Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               alignment: Alignment.centerLeft,
@@ -159,7 +174,7 @@ class _ParticularItemState extends State<ParticularItem> {
                 ),
               ),
             ),
-            SizedBox(height : 10),
+            SizedBox(height: 10),
             Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               alignment: Alignment.centerLeft,
@@ -241,7 +256,7 @@ class _ParticularItemState extends State<ParticularItem> {
                             borderRadius: BorderRadius.circular(8)),
                         elevation: 16.0,
                         onPressed: () {
-                          print(productQuantity);
+                          addToShoppingBag();
                         },
                         color: Colors.green,
                         child: Text(

@@ -2,10 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:kishanapp/services/auth.dart';
 
-class WeatherPage extends StatelessWidget {
+class WeatherPage extends StatefulWidget {
+  @override
+  _WeatherPageState createState() => _WeatherPageState();
+}
+
+class _WeatherPageState extends State<WeatherPage> {
+
+Authservice _authservice = new Authservice();
+_WeatherPageState() {
+    userData();
+  }
+
+  userData() async {
+    Map<String, dynamic> userdetails = await _authservice.getUserDetails();
+    setState(() {
+      pincode = userdetails['zipcode'];
+    });
+  }
+
   final String apiUrl =
-      "http://api.openweathermap.org/data/2.5/forecast?q=360003,in&appid=f6950dfa767d426784a7faa9ca415fa1";
+      "http://api.openweathermap.org/data/2.5/forecast?q=" + pincode + ",in&appid=f6950dfa767d426784a7faa9ca415fa1";
+
+  static String pincode = "";
   Future<List<dynamic>> fetchWeather() async {
     var result = await http.get(apiUrl);
     return json.decode(result.body)['list'];

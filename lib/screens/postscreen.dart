@@ -28,22 +28,22 @@ class _PostScreenState extends State<PostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
         body: ListView.builder(
       itemCount: featuredItems.length,
       itemBuilder: (BuildContext context, int index) {
-        return featuredItemCard(post: featuredItems[index]);
+        return FeaturedItemCard(post: featuredItems[index]);
       },
     ));
   }
 }
 
 // ignore: camel_case_types
-class featuredItemCard extends StatelessWidget {
+// ignore: must_be_immutable
+class FeaturedItemCard extends StatelessWidget {
   var post;
-  featuredItemCard({this.post});
+  FeaturedItemCard({this.post});
 
   showComments(BuildContext context,
       {String postId, String ownerId, String mediaUrl}) {

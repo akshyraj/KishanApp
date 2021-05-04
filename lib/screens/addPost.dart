@@ -17,17 +17,17 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  CollectionReference _postReference = FirebaseFirestore.instance.collection('Posts');
+  CollectionReference _postReference =
+      FirebaseFirestore.instance.collection('Posts');
   String username = '';
   File _imageFile;
   PickedFile pickeFile;
   final picker = ImagePicker();
-  String query='';
+  String query = '';
   String postId = Uuid().v4();
-  String mediaUrl='';
-  
+  String mediaUrl = '';
+
   Authservice _authservice = new Authservice();
   _AddPostState() {
     userData();
@@ -48,33 +48,29 @@ class _AddPostState extends State<AddPost> {
     });
   }
 
-  handleSubmit(BuildContext context) async
-  {
+  handleSubmit(BuildContext context) async {
     String mediaUrl = await uploadImage();
-    await createPostInFireStore(mediaUrl: mediaUrl,query: query);
-    
-     Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return HomeScreen();
-        }));
+    await createPostInFireStore(mediaUrl: mediaUrl, query: query);
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return HomeScreen();
+    }));
   }
 
-  createPostInFireStore({String mediaUrl,String query})
-  {
-
+  createPostInFireStore({String mediaUrl, String query}) {
     print(postId);
     print(_auth.currentUser.uid);
     print(username);
     print(mediaUrl);
     print(query);
 
-   _postReference.doc(postId)
-   .set({
-     'postId':postId,
-     'ownerId':_auth.currentUser.uid,
-     'username':username,
-     'mediaUrl':mediaUrl,
-     'query':query,
-   });
+    _postReference.doc(postId).set({
+      'postId': postId,
+      'ownerId': _auth.currentUser.uid,
+      'username': username,
+      'mediaUrl': mediaUrl,
+      'query': query,
+    });
   }
 
   Future<String> uploadImage() async {
@@ -116,7 +112,7 @@ class _AddPostState extends State<AddPost> {
                         children: <Widget>[
                           ListTile(
                             leading: CircleAvatar(
-                              child:Text("AJ"),
+                              child: Text("AJ"),
                               backgroundColor: Colors.teal,
                             ),
                             title: Text(
@@ -141,8 +137,7 @@ class _AddPostState extends State<AddPost> {
                               onChanged: (value) => query = value,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                contentPadding:
-                                    EdgeInsets.only( left: 5.0),
+                                contentPadding: EdgeInsets.only(left: 5.0),
                                 hintText: 'Enter your Question',
                                 hintStyle: kHintTextStyle,
                               ),
@@ -177,7 +172,7 @@ class _AddPostState extends State<AddPost> {
                             borderRadius: BorderRadius.circular(30.0),
                           ),
                           color: Colors.green,
-                          child: Text('Login',
+                          child: Text('Upload',
                               style: TextStyle(
                                 color: Colors.white,
                                 letterSpacing: 1.5,
