@@ -151,7 +151,7 @@ class HomeScreen extends StatelessWidget {
             
             ListTile(
               leading: Icon(Icons.info),
-              title: Text("Log Out"),
+              title: Text("Log Out").tr(),
               onTap: () async => {
                 FirebaseAuth.instance.signOut(),
                 if (FirebaseAuth.instance.currentUser == null)
